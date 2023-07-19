@@ -20,25 +20,11 @@
 #include <iostream>
 #include <vector>
 #include "Board.h"
-#include "unit_tests_connect4.h"
 
 
 int main()
 {
 	char ch;
-
-	std::cout << std::endl << "Do you want to run unit tests testing the ConnectFour board class functions? (Y/y)" << std::endl;
-	std::cin >> ch;
-
-	if (ch == 'Y' || ch == 'y')
-	{
-		connect_four::unit_tests::unit_tests_connect4 unit_tests;
-		unit_tests.run_unit_tests();
-	}
-	else
-	{
-		std::cout << std::endl << "Unit Tests not run" << std::endl;
-	}
 
 	std::cout << std::endl << "Do you want to run the Connect Four game? (Y/y)" << std::endl;
 	std::cin >> ch;
@@ -47,25 +33,34 @@ int main()
 	{
 		connect_four::Board connect_four_game_board;
 
-		connect_four_game_board.print_board();
+		connect_four_game_board.PrintBoard();
 
-		connect_four_game_board.run_game();
+		connect_four_game_board.RunGame();
 
-		connect_four::player_and_result result;
+		connect_four::result result;
+		connect_four::player winner;
 
-		if (connect_four_game_board.is_game_complete())
+		if (connect_four_game_board.IsGameQuitted())
 		{
-			result = connect_four_game_board.get_result();
+			std::cout << std::endl << "Game quitted." << std::endl;
+		}
+		else if (connect_four_game_board.IsGameComplete())
+		{
+			result = connect_four_game_board.GetResult();
+			winner = connect_four_game_board.GetWinner();
 
-			if (result == connect_four::player_and_result::yellow)
+			if (result == connect_four::result::won)
 			{
-				std::cout << std::endl << "Yellow is the Winner." << std::endl;
+				if (winner == connect_four::player::yellow)
+				{
+					std::cout << std::endl << "Yellow is the Winner." << std::endl;
+				}
+				else if (winner == connect_four::player::red)
+				{
+					std::cout << std::endl << "Red is the Winner." << std::endl;
+				}
 			}
-			else if (result == connect_four::player_and_result::red)
-			{
-				std::cout << std::endl << "Red is the Winner." << std::endl;
-			}
-			else if (result == connect_four::player_and_result::draw)
+			else if (result == connect_four::result::draw)
 			{
 				std::cout << std::endl << "It is a Draw." << std::endl;
 			}
