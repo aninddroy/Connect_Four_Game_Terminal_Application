@@ -94,14 +94,15 @@ namespace connect_four
 	int Board::GenerateMachineInput()
 	{
 		int machine_entered_column_number = 0;
+		std::uniform_int_distribution<> temp{ 1, 7 };
+		std::default_random_engine engine;
+
 		while (1)
 		{
 			//experimenting with two options for generating random numbers
 			
 			//machine_entered_column_number = 1 + (rand() % 7);
-			
-			std::uniform_int_distribution<> temp{ 1, 7 };
-			std::default_random_engine engine;
+				
 			machine_entered_column_number = temp(engine);
 
 			//the column number is reduced by 1, since column indexing starts from 0
